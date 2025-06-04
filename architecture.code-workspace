@@ -1,0 +1,208 @@
+{
+	"folders": [
+		{
+			"name": "☁️ Cloud Native Architecture",
+			"path": "."
+		},
+		{
+			"name": "💻 RCNA Compute",
+			"path": "rcna-kube-compute"
+		},
+		{
+			"name": "👨‍💻 RCNA Development",
+			"path": "rcna-kube-development"
+		},
+		{
+			"name": "💸 RCNA FinOps",
+			"path": "rcna-kube-finops"
+		},
+		{
+			"name": "🤖 RCNA MLOps",
+			"path": "rcna-kube-mlops"
+		},
+		{
+			"name": "📡 RCNA Networking",
+			"path": "rcna-kube-networking"
+		},
+		{
+			"name": "👀 RCNA Observability",
+			"path": "rcna-kube-observability"
+		},
+		{
+			"name": "🔧 RCNA Provider",
+			"path": "rcna-kube-provider"
+		},
+		{
+			"name": "🛡️ RCNA Security",
+			"path": "rcna-kube-security"
+		},
+		{
+			"name": "💾 RCNA Storage",
+			"path": "rcna-kube-storage"
+		},
+		{
+			"name": "🧩 RCNA Macro",
+			"path": "rcna-macro"
+		},
+		{
+			"name": "✍️ RCNA Documentation",
+			"path": "rcna-doc"
+		},
+		{
+			"name": "📦 RCNA Portal",
+			"path": "rcna-portal"
+		},
+		{
+			"name": "📦 RCNA Deployment",
+			"path": "rcna-deployment"
+		},
+		{
+			"name": "🧰 RCNA Core",
+			"path": "rcna-core"
+		}
+	],
+	"settings": {
+		"terminal.integrated.cwd": ".",
+		"files.associations": {
+			"*.sql": "postgres"
+		},
+		"editor.formatOnSave": true,
+		"editor.formatOnPaste": true,
+		"[rust]": {
+			"editor.semanticHighlighting.enabled": false
+		},
+		"rust-analyzer.cargo.features": [],
+		"rust-analyzer.checkOnSave": false,
+		"rust-analyzer.cargo.buildScripts.overrideCommand": null,
+		"cSpell.language": "en",
+		"cSpell.words": [
+			"awscli",
+			"chrono",
+			"clippy",
+			"cnpg",
+			"CNRA",
+			"codegen",
+			"compinit",
+			"coraza",
+			"CTYPE",
+			"davidanson",
+			"dependi",
+			"Descheduler",
+			"devcontainers",
+			"DISTROLESS",
+			"dpkg",
+			"dustypomerleau",
+			"elete",
+			"emove",
+			"falco",
+			"feelsgood",
+			"finnadie",
+			"finops",
+			"fpath",
+			"gitea",
+			"gitops",
+			"goberserk",
+			"godmode",
+			"GOPATH",
+			"GOROOT",
+			"hurtrealbad",
+			"jscearcy",
+			"Karpenter",
+			"krew",
+			"kubectx",
+			"kuberay",
+			"kubescape",
+			"Kyverno",
+			"libbz",
+			"libcc",
+			"libcom",
+			"libcrypto",
+			"libdb",
+			"libecpg",
+			"libgcc",
+			"libgmp",
+			"libgomp",
+			"libgss",
+			"libgssapi",
+			"libhogweed",
+			"libicu",
+			"libidn",
+			"libkeyutils",
+			"libkrb",
+			"libncurses",
+			"libnettle",
+			"libnsl",
+			"libreadline",
+			"libresolv",
+			"libsasl",
+			"libsqlite",
+			"libstdc",
+			"libtasn",
+			"libtinfo",
+			"libtirpc",
+			"libunistring",
+			"libyaml",
+			"localtime",
+			"miri",
+			"mlops",
+			"netbase",
+			"nextest",
+			"noninteractive",
+			"octocrab",
+			"opencost",
+			"opentofu",
+			"pipefail",
+			"pipx",
+			"pkief",
+			"polymeilex",
+			"prettyplease",
+			"procps",
+			"promptinit",
+			"protoc",
+			"Pulumi",
+			"RCNA",
+			"reshim",
+			"rlib",
+			"rollouts",
+			"rustup",
+			"ryanluker",
+			"serde",
+			"shellcheck",
+			"stackgres",
+			"syft",
+			"tamasfe",
+			"tektoncd",
+			"theia",
+			"timonwong",
+			"topolvm",
+			"Transnistria",
+			"tzdata",
+			"upport",
+			"velero",
+			"ventional",
+			"Yarosh",
+			"Yuriy",
+			"zhangyue",
+			"zoneinfo"
+		],
+		"workbench.iconTheme": "material-icon-theme"
+	},
+	"extensions": {
+		"recommendations": [
+			"editorconfig.editorconfig",
+			"rust-lang.rust-analyzer",
+			"dustypomerleau.rust-syntax",
+			"jscearcy.rust-doc-viewer",
+			"polymeilex.rust-targets",
+			"tamasfe.even-better-toml",
+			"zhangyue.rust-mod-generator",
+			"fill-labs.dependi",
+			"ryanluker.vscode-coverage-gutters",
+			"redhat.vscode-yaml",
+			"streetsidesoftware.code-spell-checker",
+			"pkief.material-icon-theme",
+			"mads-hartmann.bash-ide-vscode",
+			"timonwong.shellcheck"
+		]
+	}
+}

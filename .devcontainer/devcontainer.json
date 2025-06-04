@@ -1,0 +1,13 @@
+{
+  "name": "RCNA Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "developer",
+  "runArgs": ["--privileged"],
+  "mounts": [],
+  "postCreateCommand": "asdf install && npm install -g corepack && corepack enable && cargo install git-cliff --locked && cargo install cargo-nextest --locked && cargo install cargo-mutants --locked && cargo install cargo-llvm-cov --locked && npm install --force -g yarn && pipx install poetry && asdf reshim",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:1": {}
+  }
+}

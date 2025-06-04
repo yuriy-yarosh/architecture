@@ -1,0 +1,100 @@
+name: Nightly CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * *'
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build_and_test:
+    strategy:
+      fail-fast: false
+      matrix:
+        rust:
+          - nightly
+        include:
+          - os: linux
+            toolchain: x86_64-unknown-linux-gnu
+            builder: ubuntu-latest
+          - os: macos
+            toolchain: x86_64-apple-darwin
+            builder: macos-latest
+          - os: windows
+            toolchain: x86_64-pc-windows-msvc
+            builder: windows-latest
+
+    name: ${{ matrix.os }} - ${{ matrix.rust }} - ${{ matrix.toolchain }}
+    runs-on: ${{ matrix.builder }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.rust }}
+          targets: ${{ matrix.toolchain }}
+
+      - name: Cache Rust dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ matrix.os }}-${{ matrix.rust }}-${{ matrix.toolchain }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-${{ matrix.rust }}-${{ matrix.toolchain }}-
+            ${{ matrix.os }}-${{ matrix.rust }}-
+
+      - name: Run tests
+        run: cargo test --verbose
+
+  create_issue:
+    runs-on: ubuntu-latest
+    needs: build_and_test
+    if: |
+      always() &&
+      needs.build_and_test.result == 'failure'
+
+    permissions:
+      issues: write
+
+    steps:
+      - name: Create an issue
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          readarray -t exists < <(gh issue list --state open --label nightly-CI-failed --json number --jq '.[].number' --repo "$GITHUB_REPOSITORY")
+          if [[ -n "${exists[@]}" ]]; then
+            echo "Not opening another issue, already have ${#exists[@]} issue(s), latest at ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/issues/${exists[0]}."
+          else
+            cat << EOF | gh issue create \
+              --label nightly-CI-failed \
+              --title "Nightly CI Run Failed on $(date +%F)" \
+              --repo "$GITHUB_REPOSITORY" \
+              --body-file -
+          ## Nightly CI Failure
+
+          The nightly CI run on $(date +%F) has failed.
+
+          ### Details
+          - Workflow: Nightly CI
+          - Run ID: ${{ github.run_id }}
+          - Commit: ${{ github.sha }}
+
+          ### View Logs
+          [View detailed logs](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${{ github.run_id }})
+
+          Please investigate and fix the failing tests as soon as possible.
+          EOF
+          fi

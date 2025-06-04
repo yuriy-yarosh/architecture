@@ -1,0 +1,26 @@
+[package]
+name = "rcna_kube_gitops"
+description = "RCNA GitOps deployment"
+documentation = "https://architecture.yarosh.dev/gitops"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[lib]
+crate-type = ['rlib']
+
+[dependencies]
+tokio = { workspace = true, features = ["full"] }
+futures.workspace=true
+
+anyhow.workspace=true
+tracing.workspace=true
+tracing-subscriber.workspace=true
+
+[dev-dependencies]
+goldie.workspace=true
+
+[lints]
+workspace = true

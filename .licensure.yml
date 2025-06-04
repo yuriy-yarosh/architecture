@@ -1,0 +1,54 @@
+licenses:
+  - files: .*\.(rs|html)
+    ident: MPL-2.0
+    authors:
+      - name: Yuriy Yarosh
+        email: yuriy@yarosh.dev
+    auto_template: true
+    template: |
+      Copyright (C) 2016-2025 Yuriy Yarosh
+      All rights reserved.
+
+      SPDX-License-Identifier: MPL-2.0
+
+      This Source Code Form is subject to the terms of the Mozilla Public
+      License, v. 2.0. If a copy of the MPL was not distributed with this
+      file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+    unwrap_text: false
+    commenter:
+      type: line
+      comment_char: "//"
+      trailing_lines: 1
+
+comments:
+  - extension: rs
+    columns: 80
+    commenter:
+      type: block
+      start_block_char: "/*\n"
+      per_line_char: "*"
+      end_block_char: "*/"
+      trailing_lines: 0
+
+  - extension: html
+    columns: 80
+    commenter:
+      type: block
+      start_block_char: "<!--\n"
+      end_block_char: "-->"
+
+excludes:
+  - \..*/.*
+  - \.git/.*
+  - \.git.*
+  - README.*
+  - LICENSE.*
+  - NOTICE
+  - \.code-workspace
+  - rust-toolchain
+  - .tool-versions
+  - .editorconfig
+  - .*\.(lock|json|toml|yml|txt)
+  - target/.*
+  - debug/.*

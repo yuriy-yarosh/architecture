@@ -1,0 +1,30 @@
+[package]
+name = "rcna_kube_security"
+description = "RCNA security deployment"
+documentation = "https://architecture.yarosh.dev/security"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[lib]
+crate-type = ['rlib']
+
+[dependencies]
+tokio = { workspace = true, features = ["full"] }
+futures.workspace=true
+
+anyhow.workspace=true
+tracing.workspace=true
+tracing-subscriber.workspace=true
+
+[dev-dependencies]
+goldie.workspace=true
+
+[lints]
+workspace=true
+
+[features]
+skip_online_tests = []
+skip_deployment_tests = []

@@ -1,0 +1,31 @@
+[package]
+name = "bicep_azure_rcna_testing"
+description = "RCNA Bicep Azure deployment testing suite"
+documentation = "https://architecture.yarosh.dev/azure"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[[bin]]
+name = "bicep_azure_test"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { workspace = true, features = ["full"] }
+futures.workspace = true
+
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+goldie.workspace = true
+
+[lints]
+workspace = true
+
+[features]
+skip_online_tests = []
+skip_deployment_tests = []

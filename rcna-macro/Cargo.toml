@@ -1,0 +1,38 @@
+[package]
+name = "rcna_macro"
+description = "RCNA procedural macro"
+documentation = "https://architecture.yarosh.dev/macro"
+version.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = false
+
+[[bin]]
+name = "rcna_extractor"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2.workspace = true
+quote.workspace = true
+syn = { workspace = true, features = ["full", "extra-traits"] }
+prettyplease.workspace = true
+
+# Duplicating dependencies specifically for the test binary target
+[target.'cfg(not(lib))'.dependencies]
+tokio = { workspace = true, features = ["full"] }
+futures.workspace = true
+anyhow.workspace = true
+
+[build-dependencies]
+tokio = { workspace = true, features = ["full"] }
+futures.workspace = true
+anyhow.workspace = true
+
+[dev-dependencies]
+goldie.workspace = true
+
+[lints]
+workspace = true

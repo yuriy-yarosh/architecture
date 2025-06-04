@@ -1,0 +1,83 @@
+[workspace]
+resolver = "2"
+members = [
+  "rcna-kube-*",
+  "rcna-deployment/*-rcna",
+  "rcna-macro",
+  "rcna-core",
+]
+
+[package]
+name = "rcna"
+documentation = "https://architecture.yarosh.dev"
+authors.workspace = true
+version.workspace = true
+rust-version.workspace = true
+edition.workspace = true
+publish = true
+
+[dependencies]
+
+[workspace.package]
+authors = ["Yuriy Yarosh <yuriy@yarosh.dev>"]
+license = "MPL-2.0"
+version = "0.1.0"
+repository = "https://github.com/yuriy-yarosh/architecture"
+edition = "2024"
+rust-version = "1.88.0"
+
+[workspace.dependencies]
+# Async
+tokio = { version = "^1.45", features = ["full"] }
+futures = "^0.3"
+
+# Kubernetes
+kube = "^1.1"
+k8s-openapi = { version = "^0.25", features = ["latest"] }
+
+# GitHub
+octocrab = "^0.44"
+tempfile = "^3.20"
+semver = "^1.0"
+
+# coding
+serde = { version = "^1.0", features = ["derive"] }
+serde_json = "^1.0"
+chrono = "^0.4"
+
+# Derive
+derive_more = { version = "^2.0", features = ["display"]}
+
+# Macro dependencies
+proc-macro2 = "^1.0"
+quote = "^1.0"
+syn = { version = "^2.0", features = ["full", "extra-traits"] }
+prettyplease = "^0.2"
+
+# Testing
+goldie = "^0.5"
+
+# Error handling & observability
+anyhow = "^1.0"
+tracing = "^0.1"
+tracing-subscriber = "^0.3"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+unsafe_op_in_unsafe_fn = "forbid"
+
+[profile.dev]
+lto = false
+panic = "abort"
+debug-assertions = true
+overflow-checks = true
+opt-level = 0
+incremental = true
+
+[profile.release]
+lto = true
+panic = "abort"
+debug-assertions = false
+overflow-checks = true
+opt-level = 3
+incremental = true

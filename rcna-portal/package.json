@@ -1,0 +1,9 @@
+{
+  "name": "rcna-portal",
+  "version": "0.0.1",
+  "description": "RCNA portal",
+  "author": "Yuriy Yarosh <yuriy@yarosh.dev>",
+  "license": "MPL-2.0",
+  "repository": "https://github.com/yuriy-yarosh/architecture",
+  "documentation": "https://architecture.yarosh.dev/portal"
+}

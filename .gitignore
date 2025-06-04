@@ -1,0 +1,23 @@
+.vscode/
+.idea/
+
+# MacOS
+.DS_Store
+*.pem
+
+# Env
+.env
+.env.*
+
+# Misc
+.DS_Store
+*.log
+
+# Build
+target/
+debug/
+**/*.rs.bk
+*.pdb
+
+# Zola Build
+public/

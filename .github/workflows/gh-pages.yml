@@ -1,0 +1,61 @@
+name: Deploy Zola Site to GitHub Pages
+
+on:
+  push:
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Zola binary
+        id: cache-zola
+        uses: actions/cache@v4
+        with:
+          path: .zola-bin
+          key: zola-v0.20.0-${{ runner.os }}
+
+      - name: Install Zola
+        if: steps.cache-zola.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p .zola-bin
+          wget -qO- https://github.com/getzola/zola/releases/download/v0.20.0/zola-v0.20.0-x86_64-unknown-linux-gnu.tar.gz | tar xzf - -C .zola-bin
+
+      - name: Add Zola to PATH
+        run: echo "${GITHUB_WORKSPACE}/.zola-bin" >> $GITHUB_PATH
+
+      - name: Build site
+        id: build
+        run: |
+          cd rcna-doc
+          zola build
+
+      - name: Upload artifact
+        id: upload
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: rcna-doc/public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
