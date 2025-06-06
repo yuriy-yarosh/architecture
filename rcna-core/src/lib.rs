@@ -9,8 +9,6 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-mod provider;
-pub use provider::*;
+pub(crate) mod provider;
 
-mod app;
-pub use app::*;
+pub(crate) mod app;

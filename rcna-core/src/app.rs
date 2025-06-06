@@ -9,7 +9,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/.
  */
 
-use crate::*;
+use crate::provider::CloudProvider;
 
 pub struct App {
     deployed: Vec<(CloudProvider, String)>,
@@ -22,7 +22,7 @@ impl App {
         }
     }
 
-    pub fn deploy(&mut self, cloud_provider: CloudProvider, credentials: String) {
+    pub fn deploy_more(&mut self, cloud_provider: CloudProvider, credentials: String) {
         self.deployed.push((cloud_provider, credentials));
     }
 }

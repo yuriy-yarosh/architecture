@@ -17,3 +17,5 @@ mod networking;
 mod observability;
 mod security;
 mod storage;
+
+mod credentials;

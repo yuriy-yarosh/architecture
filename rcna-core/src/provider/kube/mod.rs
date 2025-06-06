@@ -17,3 +17,19 @@ mod networking;
 mod observability;
 mod security;
 mod storage;
+
+mod credentials;
+
+use kube::Client;
+
+pub enum Credentials {
+    Kubernetes(credentials::KubernetesCredentials),
+}
+
+impl Credentials {
+    pub async fn kubernetes_client(&self) -> anyhow::Result<Client> {
+        match self {
+            Credentials::Kubernetes(credentials) => credentials.client().await,
+        }
+    }
+}
