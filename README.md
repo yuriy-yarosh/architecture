@@ -181,5 +181,5 @@
 <h2 id="license">📝 License</h2>
 <p>
   Reference Cloud Native Architecture project is, and <b>forever will be</b>,
-  licensed under the terms of the <a href="LICENSE"><b>Mozilla Public License 2.0</b></a>.
+  licensed under the terms of the <br/><a href="LICENSE"><b>Mozilla Public License 2.0</b></a>.
 </p>
