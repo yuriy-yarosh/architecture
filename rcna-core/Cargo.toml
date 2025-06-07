@@ -12,20 +12,37 @@ publish = false
 crate-type = ['rlib']
 
 [dependencies]
+# Macro
+rcna_macro.workspace = true
+
+# Async
 tokio = { workspace = true, features = ["full"] }
 futures.workspace = true
 
+# Kubernetes
 kube.workspace = true
-
 k8s-openapi = { workspace = true, features = ["latest"] }
 
+# Templating
+askama.workspace = true
+
+# GitHub
 octocrab.workspace = true
-tempfile.workspace = true
-semver.workspace = true
+
+# Coding
 serde.workspace = true
 serde_json.workspace = true
 chrono.workspace = true
+semver.workspace = true
 
+# Util
+tempfile.workspace = true
+envy.workspace = true
+
+# Derive
+# derive_more.workspace = true
+
+# Error handling & observability
 anyhow.workspace = true
 tracing.workspace = true
 tracing-subscriber.workspace = true

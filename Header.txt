@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2017-2025 Yuriy Yarosh
+    Copyright (C) 2016-2025 Yuriy Yarosh
     All rights reserved.
 
     SPDX-License-Identifier: MPL-2.0

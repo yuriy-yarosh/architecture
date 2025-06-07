@@ -53,10 +53,6 @@
 			"path": "rcna-portal"
 		},
 		{
-			"name": "📦 RCNA Deployment",
-			"path": "rcna-deployment"
-		},
-		{
 			"name": "🧰 RCNA Core",
 			"path": "rcna-core"
 		}
@@ -72,11 +68,13 @@
 			"editor.semanticHighlighting.enabled": false
 		},
 		"rust-analyzer.cargo.features": [],
-		"rust-analyzer.checkOnSave": true,
+		"rust-analyzer.checkOnSave": false,
 		"rust-analyzer.cargo.buildScripts.overrideCommand": null,
 		"cSpell.language": "en",
 		"cSpell.words": [
 			"apiserver",
+			"askama",
+			"autoresizer",
 			"awscli",
 			"chrono",
 			"clippy",
@@ -96,6 +94,7 @@
 			"elete",
 			"emove",
 			"falco",
+			"Fargate",
 			"feelsgood",
 			"finnadie",
 			"finops",
@@ -148,6 +147,7 @@
 			"localtime",
 			"miri",
 			"mlops",
+			"mountpoint",
 			"netbase",
 			"nextest",
 			"noninteractive",
@@ -171,6 +171,7 @@
 			"ryanluker",
 			"serde",
 			"shellcheck",
+			"splitn",
 			"stackgres",
 			"syft",
 			"tamasfe",

@@ -14,18 +14,5 @@ pub(crate) mod azure;
 pub(crate) mod digitalocean;
 pub(crate) mod gcp;
 pub(crate) mod hetzner;
-pub(crate) mod kube;
 pub(crate) mod ovh;
 pub(crate) mod vultr;
-
-pub enum CloudProvider {
-    Aws,
-    Azure,
-    DigitalOcean,
-    Gcp,
-    Hetzner,
-    Vultr,
-    Ovh,
-
-    Kube,
-}

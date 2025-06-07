@@ -9,14 +9,12 @@
 <hr />
 
 <p align="center">
-  <b>RCNA</b> is an opinionated IaC tool, based on <a href="https://github.com/kube-rs/kube-rs">kube-rs</a> with a ton of rust codegen.
+  <b>RCNA</b> is an opinionated <a href="https://kube.rs/">kube-rs</a> application deployment solution.
 </p>
 
 <p align="center">
   <em>
-    This project defines cross-cloud application deployment conventions and provides a framework for code-generating Infrastructure-as-Code (IaC) resource definitions.
-    Boilerplate code is generated using the Rust <a href="./rcna-macro">procedural macro</a>, which processes IaC tool provider APIs.
-    This approach aims to make long-term support more manageable.
+    This project defines cross-cloud deployment conventions and provides a framework for generating Kubernetes resource definitions, targeting standardized Cloud Native Architecture.
   </em>
 </p>
 
@@ -31,8 +29,9 @@
   <blockquote><b>The best DevOps is the one you can sell.</b></blockquote>
   <br/>
   <ul>
+    <li>This is more than just a Helm replacement.</li>
     <li>Consolidating solutions and approaches accumulated over the last decade.</li>
-    <li>While still in progress, this repository should already serve as a useful reference point.</li>
+    <li>Targeting reference deployment Terraform modules.</li>
   </ul>
 
   <p>
@@ -45,10 +44,13 @@
 
   <p>
     With the introduction of <a href="https://aws.amazon.com/marketplace/features/privatemarkplace">AWS Private Marketplace</a> and <a href="https://www.youtube.com/watch?v=NSg8PKDrNro">Azure Private Marketplace</a>, this has become a missed opportunity for many.
+    The CNRA project uses [reference deployment](https://github.com/yuriy-yarosh?tab=repositories&q=terraform-reference-&type=&language=&sort=name) Terraform modules,
+    and Yuriy plans to add a tool that can convert Terraform plans to CloudFormation and ARM Templates, in the future.
+    So, everything deployed by CNRA could be shipped as a ready-to-use offering using conventional Cloud Marketplaces.
+    There's also a plan regarding an IaC agnostic FinOps solution...
   </p>
 
 </details>
-
 
 <details>
   <summary><b>Components</b></summary>

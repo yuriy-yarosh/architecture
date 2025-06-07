@@ -12,6 +12,7 @@ publish = false
 crate-type = ['rlib']
 
 [dependencies]
+rcna_core.workspace = true
 tokio = { workspace = true, features = ["full"] }
 futures.workspace=true
 

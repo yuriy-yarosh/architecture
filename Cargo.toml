@@ -2,9 +2,8 @@
 resolver = "2"
 members = [
   "rcna-kube-*",
-  "rcna-deployment/*-rcna",
   "rcna-macro",
-  "rcna-core",
+  "rcna-core"
 ]
 
 [package]
@@ -17,6 +16,28 @@ edition.workspace = true
 publish = true
 
 [dependencies]
+rcna_kube_compute.workspace = true
+rcna_kube_development.workspace = true
+rcna_kube_finops.workspace = true
+rcna_kube_gitops.workspace = true
+rcna_kube_mlops.workspace = true
+rcna_kube_networking.workspace = true
+rcna_kube_observability.workspace = true
+rcna_kube_provider.workspace = true
+rcna_kube_security.workspace = true
+rcna_kube_storage.workspace = true
+
+# Async
+tokio = { workspace = true, features = ["full"] }
+futures.workspace = true
+
+# Testing
+goldie.workspace = true
+
+# Error handling & observability
+anyhow.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
 
 [workspace.package]
 authors = ["Yuriy Yarosh <yuriy@yarosh.dev>"]
@@ -27,26 +48,48 @@ edition = "2024"
 rust-version = "1.88.0"
 
 [workspace.dependencies]
+rcna_macro = { path = "rcna-macro" }
+rcna_core = { path = "rcna-core" }
+
+rcna_kube_compute = { path = "rcna-kube-compute" }
+rcna_kube_development = { path = "rcna-kube-development" }
+rcna_kube_finops = { path = "rcna-kube-finops" }
+rcna_kube_gitops = { path = "rcna-kube-gitops" }
+rcna_kube_mlops = { path = "rcna-kube-mlops" }
+rcna_kube_networking = { path = "rcna-kube-networking" }
+rcna_kube_observability = { path = "rcna-kube-observability" }
+rcna_kube_provider = { path = "rcna-kube-provider" }
+rcna_kube_security = { path = "rcna-kube-security" }
+rcna_kube_storage = { path = "rcna-kube-storage" }
+
 # Async
 tokio = { version = "^1.45", features = ["full"] }
 futures = "^0.3"
+
+# CLI
+clap = "^4.5"
+clap_derive = "^4.5"
+envy = "^0.4"
+tempfile = "^3.20"
 
 # Kubernetes
 kube = "^1.1"
 k8s-openapi = { version = "^0.25", features = ["latest"] }
 
+# Templating
+askama = "0.14.0"
+
 # GitHub
 octocrab = "^0.44"
-tempfile = "^3.20"
 semver = "^1.0"
 
-# coding
+# Coding
 serde = { version = "^1.0", features = ["derive"] }
 serde_json = "^1.0"
 chrono = "^0.4"
 
 # Derive
-derive_more = { version = "^2.0", features = ["display"]}
+# derive_more = { version = "^2.0", features = ["display"]}
 
 # Macro dependencies
 proc-macro2 = "^1.0"
