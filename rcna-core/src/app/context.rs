@@ -13,6 +13,7 @@ use envy;
 use serde::*;
 
 use super::App;
+use super::Credentials;
 
 /// Target environment, user-specific for Development and Testing
 #[derive(Debug, Clone, Serialize, Deserialize)]

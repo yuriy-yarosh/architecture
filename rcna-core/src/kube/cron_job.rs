@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use k8s_openapi::api::batch::v1::{
     CronJob, CronJobSpec as K8SCronJobSpec, JobSpec, JobTemplateSpec,
 };
@@ -90,10 +101,11 @@ pub async fn cron_job_exists(
 
 pub async fn create_cron_job(
     client: Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
     spec: CronJobSpec,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<CronJob, anyhow::Error> {
     if name.is_empty() {
         return Err(anyhow::anyhow!("CronJob name must not be empty"));
@@ -115,7 +127,7 @@ pub async fn create_cron_job(
         ..Default::default()
     };
 
-    if ctx.dry_run {
+    if dry_run {
         return Ok(cron_job);
     }
 
@@ -123,7 +135,7 @@ pub async fn create_cron_job(
     let pp = PostParams::default();
 
     if let Some(version) = cron_job_exists(&client, name, ns_name).await? {
-        if ctx.replace {
+        if replace {
             let mut cron_job_with_version = cron_job.clone();
             cron_job_with_version.metadata.resource_version = Some(version);
             api.replace(name, &pp, &cron_job_with_version)

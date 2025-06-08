@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use crate::resources::context::Context;
 use k8s_openapi::{
     api::core::v1::{Namespace, Service, ServicePort, ServiceSpec as K8SServiceSpec},
@@ -57,10 +68,11 @@ pub async fn service_exists(
 
 pub async fn create_service(
     client: Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
     spec: ServiceSpec,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<Service, anyhow::Error> {
     if name.is_empty() {
         return Err(anyhow::anyhow!("Service name must not be empty"));
@@ -82,11 +94,15 @@ pub async fn create_service(
         ..Default::default()
     };
 
+    if dry_run {
+        return Ok(service);
+    }
+
     let api = Api::<Service>::namespaced(client.clone(), ns_name);
     let pp = PostParams::default();
 
     if let Some(version) = service_exists(&client, name, ns_name).await? {
-        if ctx.replace {
+        if replace {
             let mut service_with_version = service.clone();
             service_with_version.metadata.resource_version = Some(version);
             api.replace(name, &pp, &service_with_version)

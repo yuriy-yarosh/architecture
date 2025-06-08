@@ -1,11 +1,20 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use k8s_openapi::api::core::v1::Namespace;
 use k8s_openapi::api::core::v1::ServiceAccount;
 use kube::{
     Api, Client,
     api::{ObjectMeta, PostParams},
 };
-
-use crate::resources::context::Context;
 
 pub async fn service_account_exists(
     client: &Client,
@@ -20,9 +29,10 @@ pub async fn service_account_exists(
 
 pub async fn create_service_account(
     client: &Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<ServiceAccount, anyhow::Error> {
     let namespace_name = namespace
         .metadata
@@ -42,12 +52,12 @@ pub async fn create_service_account(
         ..Default::default()
     };
 
-    if ctx.dry_run {
+    if dry_run {
         return Ok(service_account);
     }
 
     match service_account_exists(client, name).await? {
-        Some(version) if ctx.replace => {
+        Some(version) if replace => {
             service_account.metadata.resource_version = Some(version);
             api.create(&pp, &service_account).await.map_err(Into::into)
         }

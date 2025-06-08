@@ -1,10 +1,19 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use k8s_openapi::api::core::v1::Namespace;
 use kube::{
     Api, Client,
     api::{ObjectMeta, PostParams},
 };
-
-use crate::resources::context::Context;
 
 pub async fn namespace_exists(
     client: &Client,
@@ -19,8 +28,9 @@ pub async fn namespace_exists(
 
 pub async fn create_namespace(
     client: &Client,
-    app_ctx: &Context,
     name: &str,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<Namespace, anyhow::Error> {
     if name.is_empty() {
         return Err(anyhow::anyhow!("Namespace name must not be empty"));
@@ -34,7 +44,7 @@ pub async fn create_namespace(
         ..Default::default()
     };
 
-    if ctx.dry_run {
+    if dry_run {
         return Ok(namespace);
     }
 

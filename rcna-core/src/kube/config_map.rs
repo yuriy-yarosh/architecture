@@ -1,10 +1,19 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use k8s_openapi::api::core::v1::{ConfigMap, Namespace};
 use kube::{
     Client,
     api::{Api, ObjectMeta, PostParams},
 };
-
-use crate::resources::context::Context;
 
 pub async fn config_map_exists(
     client: &Client,
@@ -20,9 +29,10 @@ pub async fn config_map_exists(
 
 pub async fn create_config_map(
     client: &Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<ConfigMap, anyhow::Error> {
     if name.is_empty() {
         return Err(anyhow::anyhow!("ConfigMap name must not be empty"));
@@ -43,7 +53,7 @@ pub async fn create_config_map(
         ..Default::default()
     };
 
-    if ctx.dry_run {
+    if dry_run {
         return Ok(config_map);
     }
 
@@ -51,7 +61,7 @@ pub async fn create_config_map(
     let pp = PostParams::default();
 
     if let Some(version) = config_map_exists(&client, name, ns_name).await? {
-        if ctx.replace {
+        if replace {
             let mut config_map_with_version = config_map.clone();
             config_map_with_version.metadata.resource_version = Some(version);
             api.replace(name, &pp, &config_map_with_version)

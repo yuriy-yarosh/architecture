@@ -11,8 +11,12 @@
 
 use serde::*;
 
+mod credentials;
 mod context;
 mod git;
+
+pub use context::*;
+pub use credentials::*;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Container {
@@ -32,7 +36,6 @@ pub enum VersionFetching {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct App {
     pub name: String,
-    pub version: String,
 
     pub git_url: String,
     pub fetch: VersionFetching,

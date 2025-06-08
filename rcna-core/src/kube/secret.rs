@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use anyhow::*;
 use k8s_openapi::api::core::v1::Secret;
 use kube::{Api, Client};
@@ -22,10 +33,11 @@ pub async fn secret_exists(client: &Client, namespace: &str, name: &str) -> Resu
 
 pub async fn create_secret(
     client: &Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
     spec: SecretSpec,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<Secret, anyhow::Error> {
     let namespace_name = namespace
         .metadata
@@ -48,8 +60,12 @@ pub async fn create_secret(
         ..Default::default()
     };
 
+    if dry_run {
+        return Ok(secret);
+    }
+
     if let Some(existing) = secrets.get_opt(name).await? {
-        if ctx.replace {
+        if replace {
             let pp = kube::api::PostParams::default();
             secrets
                 .replace(name, &pp, &secret)

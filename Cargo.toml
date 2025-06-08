@@ -1,3 +1,5 @@
+cargo-features = ["codegen-backend", "profile-rustflags"]
+
 [workspace]
 resolver = "2"
 members = [
@@ -23,7 +25,6 @@ rcna_kube_gitops.workspace = true
 rcna_kube_mlops.workspace = true
 rcna_kube_networking.workspace = true
 rcna_kube_observability.workspace = true
-rcna_kube_provider.workspace = true
 rcna_kube_security.workspace = true
 rcna_kube_storage.workspace = true
 
@@ -58,7 +59,6 @@ rcna_kube_gitops = { path = "rcna-kube-gitops" }
 rcna_kube_mlops = { path = "rcna-kube-mlops" }
 rcna_kube_networking = { path = "rcna-kube-networking" }
 rcna_kube_observability = { path = "rcna-kube-observability" }
-rcna_kube_provider = { path = "rcna-kube-provider" }
 rcna_kube_security = { path = "rcna-kube-security" }
 rcna_kube_storage = { path = "rcna-kube-storage" }
 
@@ -116,6 +116,8 @@ debug-assertions = true
 overflow-checks = true
 opt-level = 0
 incremental = true
+codegen-backend = "cranelift"
+rustflags = ["-Zshare-generics=y", "-C", "link-arg=-fuse-ld=lld"]
 
 [profile.release]
 lto = true
@@ -124,3 +126,5 @@ debug-assertions = false
 overflow-checks = true
 opt-level = 3
 incremental = true
+codegen-backend = "llvm"
+rustflags = ["-Zshare-generics=y"]

@@ -1332,7 +1332,6 @@ dependencies = [
  "rcna_kube_mlops",
  "rcna_kube_networking",
  "rcna_kube_observability",
- "rcna_kube_provider",
  "rcna_kube_security",
  "rcna_kube_storage",
  "tokio",
@@ -1442,19 +1441,6 @@ dependencies = [
 
 [[package]]
 name = "rcna_kube_observability"
-version = "0.1.0"
-dependencies = [
- "anyhow",
- "futures",
- "goldie",
- "rcna_core",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "rcna_kube_provider"
 version = "0.1.0"
 dependencies = [
  "anyhow",

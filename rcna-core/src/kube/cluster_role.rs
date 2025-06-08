@@ -1,10 +1,19 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use k8s_openapi::api::rbac::v1::{ClusterRole, PolicyRule as K8SPolicyRule};
 use kube::{
     Client,
     api::{Api, ObjectMeta, PostParams},
 };
-
-use crate::resources::context::Context;
 
 pub struct PolicyRule {
     pub api_groups: Vec<String>,
@@ -37,9 +46,10 @@ pub async fn cluster_role_exists(
 
 pub async fn create_cluster_role(
     client: &Client,
-    ctx: &Context,
     role_name: &str,
     rules: Vec<PolicyRule>,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<ClusterRole, anyhow::Error> {
     if role_name.is_empty() {
         return Err(anyhow::anyhow!("ClusterRole name must not be empty"));
@@ -54,7 +64,7 @@ pub async fn create_cluster_role(
         ..Default::default()
     };
 
-    if ctx.dry_run {
+    if dry_run {
         return Ok(role);
     }
 
@@ -62,7 +72,7 @@ pub async fn create_cluster_role(
     let pp = PostParams::default();
 
     if let Some(version) = cluster_role_exists(&client, role_name).await? {
-        if ctx.replace {
+        if replace {
             let mut role_with_version = role.clone();
             role_with_version.metadata.resource_version = Some(version);
             api.replace(&role_name, &pp, &role_with_version)

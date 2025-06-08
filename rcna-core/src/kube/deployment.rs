@@ -1,3 +1,14 @@
+/*
+ * Copyright (C) 2016-2025 Yuriy Yarosh
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: MPL-2.0
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/.
+ */
+
 use crate::resources::context::Context;
 use k8s_openapi::api::apps::v1::{Deployment, DeploymentSpec as K8SDeploymentSpec};
 use k8s_openapi::api::core::v1::{
@@ -84,10 +95,11 @@ pub async fn deployment_exists(
 
 pub async fn create_deployment(
     client: &Client,
-    ctx: &Context,
     namespace: &Namespace,
     name: &str,
     spec: DeploymentSpec,
+    dry_run: bool,
+    replace: bool,
 ) -> Result<Deployment, anyhow::Error> {
     if name.is_empty() {
         anyhow::bail!("Deployment name must not be empty");
@@ -109,11 +121,15 @@ pub async fn create_deployment(
         ..Default::default()
     };
 
+    if dry_run {
+        return Ok(deployment);
+    }
+
     let api = Api::<Deployment>::namespaced(client.clone(), ns_name);
     let pp = PostParams::default();
 
     if let Some(version) = deployment_exists(&client, name, ns_name).await? {
-        if ctx.replace {
+        if replace {
             let mut deployment_with_version = deployment.clone();
             deployment_with_version.metadata.resource_version = Some(version);
             api.replace(name, &pp, &deployment_with_version)
